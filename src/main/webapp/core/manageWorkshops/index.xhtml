@@ -149,6 +149,33 @@
                 <p:commandButton value="#{msgs['jbutler.crud.button.no']}" type="button" icon="pi pi-times" styleClass="ui-confirmdialog-no" />
                 <p:commandButton value="#{msgs['jbutler.crud.button.yes']}" type="button" icon="pi pi-check" styleClass="ui-confirmdialog-yes" />
             </p:confirmDialog>
+
+            <p:panel styleClass="box-primary card">
+                <p:commandButton icon="pi pi-print" title="Criar objetos aleatórios" oncomplete="PF('randomDialog').show()" process="@this" update="form:random-content"/>
+            </p:panel>
+
+
+            <p:dialog header="Gerar Workshops Aleatórios" widgetVar="randomDialog" showEffect="fade" responsive="true" width="350" modal="true">
+
+                <p:outputPanel id="random-content">
+                    <p:panelGrid columns="1" layout="grid" styleClass="ui-fluid card">
+                        <p:outputLabel value="Quantidade de objetos:" />
+                        <p:spinner binding="#{qtInput}" value="10" min="1" max="1000" />
+                    </p:panelGrid>
+                </p:outputPanel>
+
+                <f:facet name="footer">
+                    <p:commandButton value="Gerar" icon="pi pi-check"
+                                     actionListener="#{manageWorkshopsController.createRandomObjects(qtInput.value)}"
+                                     update=":form:dt-entities"
+                                     process="random-content @this"
+                                     oncomplete="PF('randomDialog').hide()" />
+
+                    <p:commandButton value="#{msgs['jbutler.crud.button.cancel']}" icon="pi pi-times"
+                                     onclick="PF('randomDialog').hide()" type="button" />
+                </f:facet>
+            </p:dialog>
+
         </h:form>
     </ui:define>
 </ui:composition>
